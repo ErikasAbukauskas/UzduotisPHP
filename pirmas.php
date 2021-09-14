@@ -21,42 +21,39 @@
 // Masyvas išsaugomas į COOKIE.
 // Informacija paimama iš input laukelio. Funkcija iškviečiama paspaudus mygtuką.
 
-function skaiciavimoFunkcija(){
-    if(isset($_GET["elementas"]) && !empty($_GET["elementas"])) {
-    $elementas=$_GET["elementas"];
-    $rezultatas=$elementas;
+function pridetiElementa(){
+   if(isset($_GET["elementas"]) && !empty($_GET["elementas"])) {
 
-    if (isset($_COOKIE["elementas"])) {
-    $elementuMasyvas=explode("|", $_COOKIE["elementas"]);
-    echo $_COOKIE["elementas"];
-} else {
-  $elementuMasyvas=array();  
-}
+    $elementas = $_GET["elementas"];
 
-array_push($elementuMasyvas, $elementas);
+    //neturetu buti tuscias. T.y tuscias tik tol kol nera sausainuko
+    //kai sausainiukas yra, sitas elementas turetu buti sausainiuko reiksme paversta i masyva
 
-setcookie("elementas", implode("|", $elementuMasyvas), time()+3600, "/");
+    if(isset($_cookie["elementas"])) {
+        $elementuMasyvas = explode("|", $_COOKIE["elementas"]);
 
     } else {
-        echo $_COOKIE["elementas"];
-        $rezultatas= "Laukelis tuščias.";
+        $elementuMasyvas = array();
     }
+    
+    array_push( $elementuMasyvas, $elementas );
 
-    echo "<br>Jūs pridėjote:<br>";
-    echo $rezultatas;
-   
 
+    //masyva isaugotas i COOKIE. I cookie mes galime isaugoti tikrai teksta
+    //explode - pavercia teksta i masyva
+    //implode - funkcija masyva pavercia i teksta
+
+    setcookie("elementas",implode("|", $elementuMasyvas), time() + 3600, "/");
+    echo $_COOKIE["elementas"];
+
+   }
 }
+    
 
-if (isset($_GET["prideti"])){
-    skaiciavimoFunkcija();
-
-}
-
-
-
-
-
+    //toks kodas veikia tik paspaudus mygtuka
+    if(isset($_GET["prideti"])) {
+        pridetiElementa();
+    }
 
 
 ?>
