@@ -29,10 +29,14 @@ function pridetiElementa(){
     //neturetu buti tuscias. T.y tuscias tik tol kol nera sausainuko
     //kai sausainiukas yra, sitas elementas turetu buti sausainiuko reiksme paversta i masyva
 
-    if(isset($_cookie["elementas"])) {
+    if(isset($_COOKIE["elementas"])) {
+
         $elementuMasyvas = explode("|", $_COOKIE["elementas"]);
 
+        echo $_COOKIE["elementas"]; //isivedam tik tada kada egzistuoja
+
     } else {
+
         $elementuMasyvas = array();
     }
     
@@ -44,7 +48,7 @@ function pridetiElementa(){
     //implode - funkcija masyva pavercia i teksta
 
     setcookie("elementas",implode("|", $elementuMasyvas), time() + 3600, "/");
-    echo $_COOKIE["elementas"];
+   
 
    }
 }
