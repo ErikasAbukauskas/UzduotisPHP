@@ -7,39 +7,57 @@
     <title>Document</title>
 </head>
 <body>
-<form action="" action="get">
-<button type="submit" name="patvirtinti">Sukurti elementa</button>
+
+<form action="antras.php" method="get">
+    <button type="submit" name="patvirtinti">Sukurti elementa</button>
 </form>
-
-
 
 <?php
 // 2. Sukurkite funkciją, kuri mygtuko paspaudimu, sukuria div elementą su klase "elementas-{index}". {index} = elemento numeris
+//tokiu principu susikuria elementas-1, elementas-2 ir t.t
 
-function sukurimas (){
-    if (!isset($_COOKIE["skaitiklis"])){
-        $skaitiklis=1;
-        echo "<div class='Elementas-0'>Elementas-0</div>";
-
-    } else {
+    function sukurtiElementa() {
         
-        $skaitiklis=intval($_COOKIE["skaitiklis"]);
-        $skaitiklis++;
+        //reikes panaudoti cookies, nes be jo svetaine automatiskai periskrauna ir kintamieji netenka reiksmes
+        //o masyvai tampa tusti
+        // tikslas kad paspaudus mygtuka susikuria elementas
+        //paspaudziame mygtuka, pasipildo masyvas, masyvas isiraso i cookie
+        //kito paspaudimo metu pasiemama sena cookie reiksme ir porcesas kartojasi
 
+        //jeigu sita mygtuka isivaizduotume kaip skaitikli
+        //kiekviena karta paspaudes mygtuka prie kazkokio kintamojo pridesiu +1
+        // ir sita reiksme irasysiu i cookie
 
-        for ($i=0; $i<$skaitiklis; $i++){
-        echo "<div class='Elementas-".$i."'>Elementas-".$i."</div>";
+        if(!isset($_COOKIE["skaitiklis"])) {
+
+            $skaitiklis = 1;
+
+            echo "<div class = 'elementas0'>";
+            echo "Elementas0";
+            echo "</div>";
+
+        } else {
+
+            $skaitiklis = intval($_COOKIE["skaitiklis"]);
+            $skaitiklis++;
+
+            for($i =0; $i < $skaitiklis; $i++) {
+                echo "<div class = 'elementas".$i."'>";
+                echo "Elementas".$i;
+                echo "</div>";
+            }
         }
-}
-        setcookie("skaitiklis", $skaitiklis, time() +3600, "/");
-
+       
+        setcookie("skaitiklis", $skaitiklis, time() + 3600, "/");
+        // return "Labas";
     }
 
+       
 
 
-if (isset($_GET["patvirtinti"])){
-    sukurimas();
-   
+
+    if(isset($_GET["patvirtinti"])) {
+        sukurtiElementa();
     }
 
 
